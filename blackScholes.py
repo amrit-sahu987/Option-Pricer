@@ -3,6 +3,7 @@ from scipy.stats import norm
 # why does everyone use this norm instead of numpy norm?
 # normal distribution not a norm function idiot
 
+#european options
 def blackScholes(S, K, T, r, sigma, optionType='call'):
     #should experiment with alpha-stable distributions instead of gaussian
     d1 = (np.log(S/K) + (r + 0.5*sigma**2)*T) / (sigma * np.sqrt(T))
@@ -22,7 +23,7 @@ def blackScholes(S, K, T, r, sigma, optionType='call'):
 def main():
     S = 30 # price of underlying asset
     K = 40 # strike price
-    T = 240/365 # time to expiration in years
+    T = 240/252 # time to expiration in years
     r = 0.01 # risk-free interest rate
     sigma = 0.3 # volatility of underlying asset
     optionType = 'call'

@@ -72,10 +72,25 @@ def gamma(S, K, T, r, sigma, optionType='call'):
         return None
 
 def vanna(S, K, T, r, sigma, optionType='call'):
-    pass
-
+    try:
+        d_2 = d2(S, K, T, r, sigma)
+        vega_val = vega(S, K, T, r, sigma, optionType)
+        vanna = -vega_val / (S * sigma * np.sqrt(T)) * d_2
+        return vanna
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+    
 def volga(S, K, T, r, sigma, optionType='call'):
-    pass
+    try:
+        d_1 = d1(S, K, T, r, sigma)
+        d_2 = d2(S, K, T, r, sigma)
+        vega_val = vega(S, K, T, r, sigma, optionType)
+        volga = vega_val / sigma * d_1 * d_2
+        return volga
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
 
 def charm(S, K, T, r, sigma, optionType='call'):
     pass
@@ -83,7 +98,7 @@ def charm(S, K, T, r, sigma, optionType='call'):
 def main():
     S = 30 # price of underlying asset
     K = 40 # strike price
-    T = 240/365 # time to expiration in years
+    T = 240/252 # time to expiration in years
     r = 0.01 # risk-free interest rate
     sigma = 0.3 # volatility of underlying asset
     optionType = 'call'
